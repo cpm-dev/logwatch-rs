@@ -1,0 +1,14 @@
+[package]
+name = "logwatch-rs"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+name = "logwatch_rs"
+path = "src/lib.rs"
+
+[[bin]]
+name = "logwatch-rs"
+path = "src/main.rs"
+
+[dependencies]
