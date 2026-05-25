@@ -18,12 +18,10 @@ impl<'a> LogLine<'a> {
     		let level   = parts.next()?;
     		let service = parts.next()?;
     		// collect the rest as message
-    		let message = raw
-        		.trim_start_matches(level)
-        		.trim_start_matches(service)
-        		.trim();
+		let message = parts.collect::<Vec<&str>>().join(" ");
 
-    		Some(LogLine { level, service, message, raw })
+    		Some(LogLine { level, service, message: &raw[raw.find(&message)?..], raw })		
+    		
 	}
 }
 
