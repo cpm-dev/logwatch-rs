@@ -12,15 +12,16 @@ pub struct LogLine<'a> {
 impl<'a> LogLine<'a> {
     /// Parse a raw &str into a LogLine that borrows from it.
     /// The caller must ensure the raw string outlives the LogLine.
-    pub fn parse(raw: &'a str) -> Option<LogLine<'a>> {
-        let mut parts = raw.splitn(3, ' ')
-                           .map(|s| s.trim())
-                           .filter(|s| !s.is_empty());
-	Some(LogLine {
-            level:   parts.next()?,
-            service: parts.next()?,
-            message: parts.next()?,
-            raw,
-        })
-    }
+	pub fn parse(raw: &'a str) -> Option<LogLine<'a>> {
+    		let mut iter = raw.splitn(3, ' ');
+    		let level   = iter.next()?.trim();
+    		let service = iter.next()?.trim();
+    		let message = iter.next()?.trim();
+
+    		if level.is_empty() || service.is_empty() || message.is_empty() {
+        		return None;
+    		}
+
+    		Some(LogLine { level, service, message, raw })
+	}	
 }
